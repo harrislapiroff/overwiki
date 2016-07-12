@@ -1,0 +1,13 @@
+{% extends "wiki/__base.html" %}
+
+{% block main %}
+	<div class="row">
+		<div class="col-sm-8 col-md-10">
+			<h2 class="page-title">{{ page.title }}</h2>
+		</div>
+		<div class="col-sm-4 col-md-2">
+			<a href="{% url "page_update" page.slug %}" class="btn btn-sm btn-secondary"><span class="fa fa-pencil"></span> Edit</a>
+		</div>
+	</div>
+	<article class="page-content">{{ page.content }}</article>
+{% endblock %}

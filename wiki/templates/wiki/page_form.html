@@ -1,0 +1,25 @@
+{% extends "wiki/__base.html" %}
+
+{% block main %}
+	<h2>
+		{% if page %}
+			{{ page.title }}
+		{% else %}
+			New page
+		{% endif %}
+	</h2>
+
+	<form action="" method="POST">
+		{% csrf_token %}
+
+		{{ form.as_p }}
+
+		<button class="btn btn-primary">
+			{% if page %}
+				Save
+			{% else %}
+				Create
+			{% endif %}
+		</button>
+	</form>
+{% endblock %}
