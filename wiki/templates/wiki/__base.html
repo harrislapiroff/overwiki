@@ -10,12 +10,19 @@
 	<body>
 		{% block body %}
 			<nav class="navbar navbar-full navbar-light bg-faded">
-				<a class="navbar-brand" href="/">Wiki</a>
-				<ul class="nav navbar-nav pull-sm-right">
-					<li class="nav-item">
-						<a class="nav-link" href="{% url "page_create" %}"><span class="fa fa-plus"></span> New Page</a>
-					</li>
-				</ul>
+				<div class="container">
+					<a class="navbar-brand" href="/">Wiki</a>
+					<ul class="nav navbar-nav pull-sm-right">
+						<li class="nav-item">
+							<a class="nav-link" href="{% url "page_create" %}"><span class="fa fa-fw fa-plus"></span> New Page</a>
+						</li>
+						{% if request.user.is_authenticated %}
+							<li class="nav-item">
+								<a class="nav-link" href="#"><span class="fa fa-fw fa-user"></span> {{ request.user }}</a>
+							</li>
+						{% endif %}
+					</ul>
+				</div>
 			</nav>
 			<div class="container m-y-2">
 				{% block container %}
