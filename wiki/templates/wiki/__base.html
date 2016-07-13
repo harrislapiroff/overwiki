@@ -1,10 +1,14 @@
+{% load compress staticfiles %}
+
 <!doctype html>
 
 <html>
 	<head>
 		<title>{% block title %}Wiki{% endblock %}</title>
 		{% block stylesheets %}
-			<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+			{% compress css %}
+				<link rel="stylesheet" type="text/x-sass" href="{% static 'wiki/css/base.sass' %}">
+			{% endcompress %}
 		{% endblock %}
 	</head>
 	<body>
