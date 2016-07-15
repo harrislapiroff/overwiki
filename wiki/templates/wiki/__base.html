@@ -6,56 +6,54 @@
 	<head>
 		<title>{% block title %}Wiki{% endblock %}</title>
 		{% block stylesheets %}
+			<link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 			{% compress css %}
-				<link rel="stylesheet" type="text/x-sass" href="{% static 'wiki/css/base.sass' %}">
+				<link rel="stylesheet" type="text/x-sass" href="{% static 'wiki/css/wiki.sass' %}">
 			{% endcompress %}
 		{% endblock %}
 	</head>
 	<body>
 		{% block body %}
-			<nav class="navbar navbar-full navbar-light bg-faded">
-				<div class="container">
-					<a class="navbar-brand" href="/">Wiki</a>
-					<ul class="nav navbar-nav pull-sm-right">
-						<li class="nav-item">
-							<a class="nav-link" href="{% url "page_create" %}"><span class="fa fa-fw fa-plus"></span> New Page</a>
-						</li>
-						{% if request.user.is_authenticated %}
-							<li class="nav-item">
-								<a class="nav-link" href="#"><span class="fa fa-fw fa-user"></span> {{ request.user }}</a>
-							</li>
-						{% endif %}
-					</ul>
-				</div>
-			</nav>
-			<div class="container m-y-2">
-				{% block container %}
-					{% block before %}{% endblock %}
-					<div class="row">
-						<main class="col-md-9 col-md-push-3">
-							{% block main %}{% endblock %}
-						</main>
-						<div class="col-md-3 col-md-pull-9">
-							{% block side %}
-								<h2 class="sr-only">All Pages</h2>
-								<ul class="list-unstyled">
-									{% with current_page=page %}
-										{% for page in pages %}
-											{% if page != current_page %}
-												<li><a href="{% url "page_detail" page.slug %}">{{ page.title }}</a></li>
-											{% else %}
-												<li><strong>{{ page.title }}</strong></li>
-											{% endif %}
-										{% endfor %}
-									{% endwith %}
-								</ul>
-							{% endblock %}
-						</div>
+			{% block before %}{% endblock %}
+				<main class="site-layout-main">
+					<div class="site-layout-column p-x-1 p-y-3">
+						<nav class="navbar navbar-light bg-faded m-b-1">
+							<a class="navbar-brand" href="/">Wiki</a>
+							<ul class="nav navbar-nav pull-sm-right">
+								<li class="nav-item">
+									<a class="nav-link" href="{% url "page_create" %}"><span class="fa fa-fw fa-plus"></span> New Page</a>
+								</li>
+								{% if request.user.is_authenticated %}
+									<li class="nav-item">
+										<a class="nav-link" href="#"><span class="fa fa-fw fa-user"></span> {{ request.user }}</a>
+									</li>
+								{% endif %}
+							</ul>
+						</nav>
+						{% block main %}{% endblock %}
 					</div>
-					{% block after %}{% endblock %}
-				{% endblock %}
+				</main>
+				<div class="site-layout-sidebar">
+					{% block side %}
+						<nav class="p-a-1">
+							<h2 class="sr-only">All Pages</h2>
+							<ul class="list-unstyled">
+								{% with current_page=page %}
+									{% for page in pages %}
+										{% if page != current_page %}
+											<li><a href="{% url "page_detail" page.slug %}">{{ page.title }}</a></li>
+										{% else %}
+											<li><strong>{{ page.title }}</strong></li>
+										{% endif %}
+									{% endfor %}
+								{% endwith %}
+							</ul>
+						</nav>
+					{% endblock side %}
+				</div>
 			</div>
-		{% endblock%}
+			{% block after %}{% endblock %}
+		{% endblock body %}
 		{% block scripts %}
 			<script src="https://use.fontawesome.com/df3887b84b.js"></script>
 		{% endblock %}
