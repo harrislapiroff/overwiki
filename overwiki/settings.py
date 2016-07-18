@@ -79,8 +79,9 @@ WSGI_APPLICATION = 'overwiki.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
+DATABASES = {
+    'default': dj_database_url.config()
+}
 
 
 # Password validation
