@@ -14,4 +14,5 @@ psycopg2==2.6.2
 rcssmin==1.0.6
 rjsmin==1.0.12
 six==1.10.0
+whitenoise==3.2
 https://github.com/littleweaver/django-bootstrap/tarball/master
