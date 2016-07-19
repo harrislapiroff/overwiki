@@ -1,4 +1,6 @@
 from django.views.generic import DetailView, UpdateView, CreateView
+from django.shortcuts import redirect
+from django.http import Http404
 from rest_framework import viewsets
 from reversion.views import RevisionMixin
 from wiki.models import Page
@@ -19,6 +21,16 @@ class WikiContextMixin(object):
 
 class PageView(WikiContextMixin, DetailView):
     model = Page
+
+    def get(self, *args, **kwargs):
+        try:
+            self.object = self.get_object()
+        except Http404:
+            # TODO: This should probably redirect to a create page with title
+            # and slug prefilled
+            return redirect("page_create")
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
     def get_context_object_name(self, obj):
         return 'page'
