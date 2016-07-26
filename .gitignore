@@ -2,3 +2,5 @@
 .sass-cache
 *.sqlite3
 /static/
+/media/
+/node_modules/

@@ -133,9 +133,12 @@ STATICFILES_FINDERS = [
     'compressor.finders.CompressorFinder',
 ]
 
+_BABEL_PATH = os.path.join(BASE_DIR, 'node_modules/.bin/babel')
+
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
     ('text/x-sass', 'django_libsass.SassCompiler'),
+    ('text/jsx', 'cat {{infile}} | {babel} > {{outfile}}'.format(babel=_BABEL_PATH)),
 )
 
 COMPRESS_CSS_FILTERS = (
