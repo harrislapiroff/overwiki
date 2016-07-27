@@ -4,13 +4,22 @@
 <html>
 	<head>
 		<title>Wiki</title>
-		{% compress js %}
-			<script type="text/jsx" src="{% static "wiki/js/main.jsx" %}"></script>
-		{% endcompress %}
-		{% compress css %}
-			<link rel="stylesheet" type="text/x-sass" href="{% static 'wiki/css/wiki.sass' %}">
-		{% endcompress %}
+		{% block css %}
+			{% compress css %}
+				<link rel="stylesheet" type="text/x-sass" href="{% static 'wiki/css/wiki.sass' %}">
+			{% endcompress %}
+		{% endblock %}
 	</head>
 	<body>
+		<div id="app"></div>
+		{% block js %}
+			<script src="https://npmcdn.com/axios/dist/axios.min.js"></script>
+			<script src="https://npmcdn.com/react-router/umd/ReactRouter.min.js"></script>
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react.js"></script>
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/15.2.1/react-dom.js"></script>
+			{% compress js %}
+				<script type="text/jsx" src="{% static "wiki/js/main.jsx" %}"></script>
+			{% endcompress %}
+		{% endblock %}
 	</body>
 </html>
