@@ -1,0 +1,19 @@
+<nav class="navigation">
+	<div class="navigation-right-icons">
+		<span class="navigation-icon">
+			<a class="navigation-link" href="{% url "page_create" %}">
+				<i class="fa fa-fw fa-plus"></i>
+			</a>
+		</span>
+		<span class="navigation-icon">
+			<a class="navigation-link" href="{% url "page_update" page.slug %}">
+				<i class="fa fa-fw fa-pencil"></i>
+			</a>
+		</span>
+	</div>
+		{% if request.user.is_authenticated %}
+			<li class="nav-item">
+				<a class="nav-link" href="#"><span class="fa fa-fw fa-user"></span> {{ request.user }}</a>
+			</li>
+		{% endif %}
+</nav>

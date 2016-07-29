@@ -5,7 +5,6 @@
 {% block main %}
 	<h2 class="page-title">
 		{{ page.title }}
-		<a href="{% url "page_update" page.slug %}" class="text-muted"><span class="fa fa-pencil"></span><span class="sr-only">Edit</span></a>
 	</h2>
 	<article class="page-content">{{ page.content|wikimarkdown }}</article>
 {% endblock %}

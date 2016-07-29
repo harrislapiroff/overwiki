@@ -1,0 +1,18 @@
+<div class="site-layout-sidebar">
+	{% block side %}
+		<nav class="p-a-1">
+			<h2 class="sr-only">All Pages</h2>
+			<ul class="list-unstyled">
+				{% with current_page=page %}
+					{% for page in pages %}
+						{% if page != current_page %}
+							<li><a href="{% url "page_detail" page.slug %}">{{ page.title }}</a></li>
+						{% else %}
+							<li>{{ page.title }}</li>
+						{% endif %}
+					{% endfor %}
+				{% endwith %}
+			</ul>
+		</nav>
+	{% endblock side %}
+</div>
