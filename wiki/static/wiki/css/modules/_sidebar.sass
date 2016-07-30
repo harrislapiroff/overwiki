@@ -1,0 +1,20 @@
+.sidebar
+  background-color: $blue-lightest
+  border-right: 1px solid darken($blue-lightest, 2%)
+  padding: 1rem
+
+  &-list
+    padding-left: 0
+    list-style: none
+
+  &-item
+
+    &-is-current
+      color: $gray-mid
+
+    &-is-link
+      color: $blue-mid
+
+      &:hover
+        color: $blue-darker
+        text-decoration: none
