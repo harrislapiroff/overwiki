@@ -6,7 +6,7 @@
 				{% for page in pages %}
 					{% if page != current_page %}
 						<li>
-							<a class="sidebar-item-is-link" href="{% url "page_detail" page.slug %}">
+							<a class="link-is-muted" href="{% url "page_detail" page.slug %}">
 								{{ page.title }}
 							</a>
 						</li>
