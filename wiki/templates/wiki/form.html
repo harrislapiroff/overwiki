@@ -1,0 +1,31 @@
+<form class="form" action="" method="POST">
+    {% csrf_token %}
+
+    <div class="form-input-group form-input-group-is-inline">
+        <label class="form-label">Title</label>
+        <input class="form-input" maxlength="255" name="title" type="text" placeholder="Page Title" value="{{ page.title }}"/>
+	</div>
+
+    {% if not page %}
+		<div class="form-input-group form-input-group-is-inline">
+	        <label class="form-label">Slug</label>
+	        <input class="form-input" maxlength="255" name="slug" type="text" placeholder="A URL Slug"/>
+		</div>
+	{% endif %}
+
+    <div class="form-input-group">
+        <label class="form-label">Content</label>
+        <p class="form-description">
+			Content may include <a href="https://daringfireball.net/projects/markdown/syntax" target="_blank">markdown syntax</a> for formatting.
+		</p>
+        <textarea class="form-textarea" cols="40" name="content" rows="7" placeholder="Here's where you write things">{{ page.content }}</textarea>
+	</div>
+
+    <button class="button button-is-primary">
+        {% if page %}
+            Save
+        {% else %}
+            Create
+        {% endif %}
+    </button>
+</form>
