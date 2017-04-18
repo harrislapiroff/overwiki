@@ -8,7 +8,12 @@
 		{% render_bundle 'main' 'css' %}
 	</head>
 	<body>
-		<div id="app"></div>
+		<div
+			id="app"
+			data-api-wiki-root="{% url 'wiki:api-root' %}"
+			data-api-login="{% url 'auth:login' %}"
+			data-api-logout="{% url 'auth:logout' %}"
+		></div>
 		{% render_bundle 'main' 'js' %}
 	</body>
 </html>

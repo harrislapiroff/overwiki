@@ -8,13 +8,24 @@ import {
   Link,
 } from 'react-router-dom'
 
+import WikiPage from '~/components/WikiPage'
 
-render(
+
+const appEl = document.getElementById('app')
+const {
+	apiLogin,
+	apiLogout,
+	apiWikiRoot,
+} = appEl.dataset
+
+
+render((
 	<div>
 		<Router>
-			<Route path="/">
-				<h1>Welcome to Overwiki!</h1>
-			</Route>
+			<div>
+				<Route exact path="/" component={WikiPage} />
+				<Route path="/:slug" component={WikiPage} />
+			</div>
 		</Router>
 	</div>
-, document.getElementById('app'))
+), appEl)
