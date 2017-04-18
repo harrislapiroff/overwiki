@@ -28,7 +28,7 @@ var postCSSPlugins = function() {
 
 var main = {
 	entry: {
-		main: __dirname + '/client/main.js',
+		main: path.resolve(__dirname, 'client/main.jsx'),
 	},
 
 	output: {
@@ -37,11 +37,8 @@ var main = {
 	},
 
 	resolve: {
-		alias: {
-			'~': __dirname + '/client/js',
-			modernizr$: path.resolve(__dirname, '.modernizrrc')
-		},
-		extensions: ['.js', '.jsx'],
+		alias: { '~': path.resolve(__dirname, 'client/') },
+		extensions: ['.js', '.jsx', '.scss', '.sass'],
 		modules: ['node_modules']
 	},
 
@@ -53,13 +50,13 @@ var main = {
 					{
 						loader: 'babel-loader',
 						query: {
-							presets: ['react', 'es2015', 'stage-0', 'stage-1', 'stage-2'],
+							presets: ['react', 'env'],
 							plugins: ['add-module-exports']
 						},
 					}
 				],
 				include: [
-					path.join(__dirname, '/client'),
+					path.resolve(__dirname, 'client/'),
 				],
 			},
 			{
@@ -76,7 +73,7 @@ var main = {
 					{
 						loader: 'sass-loader',
 						options: {
-							includePaths: [path.resolve(__dirname, 'node_modules/')]
+							includePaths: [path.join(__dirname, 'node_modules')]
 						}
 					}
 				],
@@ -93,11 +90,6 @@ var main = {
 						}
 					}
 				]
-			},
-			// Currently unused, but we'll want it if we install modernizr:
-			{
-				test: /\.modernizrrc$/,
-				use: ['modernizr']
 			}
 		]
 	},
