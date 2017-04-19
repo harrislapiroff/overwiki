@@ -12,11 +12,7 @@ import WikiPage from '~/components/WikiPage'
 
 
 const appEl = document.getElementById('app')
-const {
-	apiLogin,
-	apiLogout,
-	apiWikiRoot,
-} = appEl.dataset
+window.apiRoot = appEl.dataset.apiWikiRoot
 
 
 render((
