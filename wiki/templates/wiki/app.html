@@ -1,0 +1,14 @@
+{% load render_bundle from webpack_loader %}
+
+<!doctype html>
+
+<html>
+	<head>
+		<title>{% block title %}Overwiki{% endblock %}</title>
+		{% render_bundle 'main' 'css' %}
+	</head>
+	<body>
+		<div id="app" data-api-wiki-root="{% url 'wiki:api-root' %}"></div>
+		{% render_bundle 'main' 'js' %}
+	</body>
+</html>

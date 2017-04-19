@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 @reversion.register
 class Page(models.Model):
     title = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField(max_length=255, blank=True, unique=True)
+    slug = models.SlugField(max_length=255, unique=True)
     content = models.TextField()
 
     def get_absolute_url(self):

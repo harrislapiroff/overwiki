@@ -1,4 +1,18 @@
-*.pyc
-.sass-cache
+# Python
+__pycache__/
+
+# Database
 *.sqlite3
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Generated directories
 /static/
+/media/
+/wiki/static/wiki/bundles/
+/node_modules/
+
+# User-created files
+.env
