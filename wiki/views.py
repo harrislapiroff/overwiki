@@ -11,4 +11,5 @@ from wiki.serializers import PageSerializer
 class PageViewSet(viewsets.ModelViewSet):
     queryset = Page.objects.all()
     serializer_class = PageSerializer
+    lookup_field = 'slug'
     permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
