@@ -10,13 +10,14 @@ import {
 
 import WikiPage from '~/components/WikiPage'
 
+import './base.sass'
 
 const appEl = document.getElementById('app')
 window.apiRoot = appEl.dataset.apiWikiRoot
 
 
 render((
-	<div>
+	<div class="wiki-app">
 		<Router>
 			<div>
 				<Route exact path="/" component={WikiPage} />
