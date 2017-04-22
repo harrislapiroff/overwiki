@@ -5,14 +5,67 @@ from __future__ import unicode_literals
 from django.db import migrations
 
 
+HOMEPAGE_CONTENT = """{
+  "entityMap": {},
+  "blocks": [
+    {
+      "key": "9u9ik",
+      "text": "This is your sample page.",
+      "type": "header-two",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    },
+    {
+      "key": "c3gra",
+      "text": "Pug master cleanse cardigan kombucha, live-edge venmo succulents ethical franzen YOLO gluten-free etsy. Prism next level vexillologist cred, narwhal seitan portland venmo selvage tumeric tilde. Locavore street art hashtag waistcoat jean shorts, fashion axe scenester poke raclette cornhole cold-pressed marfa succulents occupy. Narwhal try-hard leggings drinking vinegar tacos waistcoat. Seitan occupy iPhone narwhal kale chips pug. Knausgaard PBR&B literally, fanny pack coloring book activated charcoal pinterest dreamcatcher +1. Activated charcoal hoodie gastropub tote bag.",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    },
+    {
+      "key": "5aei9",
+      "text": "Leggings fanny pack authentic blue bottle bushwick, everyday carry pok pok chartreuse kickstarter. Sustainable pinterest wolf, succulents put a bird on it single-origin coffee kinfolk master cleanse yr fashion axe pitchfork banjo sriracha. Pork belly viral gochujang VHS, cred scenester kinfolk kickstarter health goth tbh food truck tofu mumblecore artisan. Readymade air plant lo-fi, cornhole normcore ramps locavore small batch celiac jianbing. Marfa cronut cray crucifix, neutra post-ironic coloring book. Semiotics DIY narwhal austin pop-up seitan paleo. Four loko direct trade helvetica enamel pin DIY williamsburg.",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    },
+    {
+      "key": "78ag0",
+      "text": "Normcore mustache gastropub, YOLO marfa polaroid narwhal organic. Fixie vegan hella, intelligentsia kale chips twee hashtag readymade brooklyn asymmetrical retro. Brooklyn readymade next level, mustache art party vexillologist brunch truffaut. Pinterest mumblecore chillwave af yr. Pour-over vexillologist cred, artisan copper mug polaroid chillwave selfies ramps bespoke lyft glossier roof party. Waistcoat neutra drinking vinegar, listicle plaid coloring book offal disrupt venmo typewriter retro ethical selfies slow-carb. VHS poutine lyft, scenester try-hard helvetica banh mi roof party.",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    },
+    {
+      "key": "rj7q",
+      "text": "Shabby chic poutine meditation disrupt, enamel pin kitsch polaroid marfa tofu letterpress woke. Actually slow-carb mlkshk hot chicken iPhone art party. Kickstarter knausgaard pop-up, lyft flexitarian pinterest church-key dreamcatcher freegan drinking vinegar kogi mlkshk af. Pork belly fashion axe direct trade church-key coloring book tacos meggings, listicle try-hard flexitarian twee. Irony godard vegan authentic vinyl raclette. Kogi fingerstache artisan, hexagon cray woke waistcoat brunch microdosing farm-to-table YOLO mixtape freegan letterpress. Post-ironic helvetica ethical live-edge authentic, shoreditch marfa cornhole hexagon quinoa photo booth street art butcher af.",
+      "type": "unstyled",
+      "depth": 0,
+      "inlineStyleRanges": [],
+      "entityRanges": [],
+      "data": {}
+    }
+  ]
+}"""
+
+
 def forwards(apps, schema_editor):
     Page = apps.get_model('wiki', 'Page')
     db_alias = schema_editor.connection.alias
     Page.objects.using(db_alias).create(
         title='Welcome to Overwiki',
         slug='home',
-        content='This is your homepage.'
+        content=HOMEPAGE_CONTENT
     )
+
 
 def backwards(apps, schema_editor):
     Page = apps.get_model('wiki', 'Page')
