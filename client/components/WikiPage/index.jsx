@@ -2,6 +2,9 @@ import axios from 'axios'
 import React, { PureComponent } from 'react'
 
 import Loader from '~/components/Loader'
+import WikiPageEditor from '~/components/WikiPage/WikiPageEditor'
+
+import './WikiPage.sass'
 
 export default class WikiPage extends PureComponent {
 
@@ -54,10 +57,10 @@ export default class WikiPage extends PureComponent {
 		const { page } = this.state
 
 		return (
-			<div>
-				<h1>{page.title}</h1>
-				<div>
-					{page.content}
+			<div className="wiki-page">
+				<h1 className="wiki-page__title">{page.title}</h1>
+				<div className="wiki-page__content">
+					<WikiPageEditor />
 				</div>
 			</div>
 		)
