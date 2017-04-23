@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom'
 
 import WikiPage from '~/components/WikiPage'
+import PageListContainer from '~/components/PageList/PageListContainer'
 
 import './base.sass'
 import './SidebarLayout.sass'
@@ -22,7 +23,7 @@ render((
 		<Router>
 			<div className="sidebar-layout">
 				<div className="sidebar-layout--side">
-				Sidebar
+					<PageListContainer />
 				</div>
 				<div className="sidebar-layout--main">
 					<Route exact path="/" component={WikiPage} />
