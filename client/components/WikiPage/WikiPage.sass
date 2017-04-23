@@ -1,8 +1,11 @@
+$w-max-width: 800px
+$w-padding: 100px
+
 .wiki-page
 	box-sizing: border-box
 	margin: 0 auto
-	padding: 0 100px
-	max-width: 800px
+	padding: 0 $w-padding
+	max-width: $w-max-width
 
 .wiki-page__title
 	font-size: 48px
@@ -11,3 +14,17 @@
 
 .wiki-page__body
 	margin-bottom: 100px
+
+.wiki-page__status
+	box-sizing: border-box
+	background-color: #F5F5F5
+	color: #888
+	font-size: .8em
+	position: fixed
+	bottom: 0
+	left: 50%
+	transform: translate(-50%, 0)
+	width: 100%
+	max-width: $w-max-width - 2 * $w-padding
+	padding: 10px 20px
+	margin: 0 auto

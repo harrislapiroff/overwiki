@@ -15,14 +15,16 @@ export default class WikiPage extends PureComponent {
 
 		this.state = {
 			loading: true,
+			pristine: true,
 			saving: false,
 			page: null,
 		}
 
 		this.fetchData = this.fetchData.bind(this)
+		this.patchData = throttle(this.patchData, 1000).bind(this)
 		this.getSlug = this.getSlug.bind(this)
 		this.handleDataLoaded = this.handleDataLoaded.bind(this)
-		this.handleEditorChange = throttle(this.handleEditorChange, 5000).bind(this)
+		this.handleEditorChange = this.handleEditorChange.bind(this)
 	}
 
 	/** Fetch page data once the component mounts */
@@ -45,6 +47,20 @@ export default class WikiPage extends PureComponent {
 		)
 	}
 
+	/** Patch updated content to the API */
+	patchData(content) {
+		const csrfToken = Cookie.get('csrftoken')
+		const headers = csrfToken ? { 'X-CSRFToken': csrfToken } : {}
+		this.setState({ saving: true })
+		axios.patch(
+			`${window.apiRoot}pages/${this.getSlug()}/`,
+			{ content },
+			{ headers },
+		).then(
+			this.setState.bind(this, { saving: false, pristine: true }, null)
+		)
+	}
+
 	/** Return slug if one is set in the URL, otherwise 'home' */
 	getSlug() {
 		return this.props.match.params.slug || 'home'
@@ -56,22 +72,16 @@ export default class WikiPage extends PureComponent {
 	}
 
 	handleEditorChange(content) {
-		const csrfToken = Cookie.get('csrftoken')
-		const headers = csrfToken ? { 'X-CSRFToken': csrfToken } : {}
-		this.setState({ saving: true })
-		axios.patch(
-			`${window.apiRoot}pages/${this.getSlug()}/`,
-			{ content },
-			{ headers },
-		).then(
-			this.setState.bind(this, { saving: false }, null)
+		this.setState(
+			{ pristine: false },
+			this.patchData(content)
 		)
 	}
 
 	render() {
 		if (this.state.loading) return <Loader />
 
-		const { page } = this.state
+		const { page, saving } = this.state
 
 		return (
 			<div className="wiki-page">
@@ -81,6 +91,11 @@ export default class WikiPage extends PureComponent {
 						content={JSON.parse(page.content)}
 						onChange={this.handleEditorChange}
 					/>
+				</div>
+				<div className="wiki-page__status">
+					{!this.state.pristine && !this.state.saving && 'Unsaved.'}
+					{this.state.saving && 'Saving...'}
+					{this.state.pristine && 'Saved.'}
 				</div>
 			</div>
 		)
