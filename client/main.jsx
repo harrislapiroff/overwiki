@@ -11,6 +11,7 @@ import {
 import WikiPage from '~/components/WikiPage'
 
 import './base.sass'
+import './SidebarLayout.sass'
 
 const appEl = document.getElementById('app')
 window.apiRoot = appEl.dataset.apiWikiRoot
@@ -19,9 +20,14 @@ window.apiRoot = appEl.dataset.apiWikiRoot
 render((
 	<div class="wiki-app">
 		<Router>
-			<div>
-				<Route exact path="/" component={WikiPage} />
-				<Route path="/:slug" component={WikiPage} />
+			<div className="sidebar-layout">
+				<div className="sidebar-layout--side">
+				Sidebar
+				</div>
+				<div className="sidebar-layout--main">
+					<Route exact path="/" component={WikiPage} />
+					<Route path="/:slug" component={WikiPage} />
+				</div>
 			</div>
 		</Router>
 	</div>
