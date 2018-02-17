@@ -16,3 +16,6 @@ pip-delete-this-directory.txt
 
 # User-created files
 .env
+
+# Application-specific
+/overwiki/local_settings.py

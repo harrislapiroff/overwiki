@@ -98,3 +98,5 @@ WEBPACK_LOADER = {
         'STATS_FILE': os.path.join(BASE_DIR, 'wiki/static/wiki/bundles/webpack-stats.json'),
     },
 }
+
+from .local_settings import *
