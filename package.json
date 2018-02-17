@@ -5,7 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "build": "webpack --optimize-minimize",
-    "start": "webpack -w -d --display-error-details",
+    "start": "npm install && webpack -w -d --display-error-details",
     "lint": "eslint app/**/*.jsx"
   },
   "devDependencies": {
@@ -42,6 +42,8 @@
     "modernizr-loader": "^1.0.1",
     "money-math": "^2.4.3",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react-dom": "^15.3.2",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2"
   }
 }

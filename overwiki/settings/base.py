@@ -1,16 +1,13 @@
-"""
-Django settings for overwiki project.
-"""
-
 import os
 import dj_database_url
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-SECRET_KEY = os.environ.get('SECRET_KEY')
-DEBUG = True
-
-ALLOWED_HOSTS = []
+BASE_DIR = os.path.dirname(
+    os.path.dirname(
+        os.path.dirname(
+            os.path.abspath(__file__)
+        )
+    )
+)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -57,7 +54,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'overwiki.wsgi.application'
 
 DATABASES = {
-    'default': dj_database_url.config(default='sqlite:///db.sqlite3')
+    # Defaults to the docker database
+    'default': dj_database_url.config(
+        default='postgres://overwiki:onewikitorulethem@localhost:15432/overwiki'
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -98,5 +98,3 @@ WEBPACK_LOADER = {
         'STATS_FILE': os.path.join(BASE_DIR, 'wiki/static/wiki/bundles/webpack-stats.json'),
     },
 }
-
-from .local_settings import *

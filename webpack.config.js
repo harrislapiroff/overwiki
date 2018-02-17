@@ -117,6 +117,9 @@ if (TARGET === 'build') {
 
 if (TARGET === 'start') {
 	module.exports = merge(main, {
+		output: {
+			filename: '[name]-[hash].js'
+		},
 		devtool: 'eval-source-map',
 		devServer: {
 			contentBase: target,

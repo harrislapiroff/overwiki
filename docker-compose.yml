@@ -1,0 +1,20 @@
+version: '3'
+services:
+    postgres:
+        image: 'postgres:10.2-alpine'
+        environment:
+            POSTGRES_USER: 'overwiki'
+            POSTGRES_PASSWORD: 'onewikitorulethem'
+        ports:
+            - '15432:5432'
+    webpack:
+        image: 'node:9.5.0-alpine'
+        user: 'node'
+        command: 'npm run start'
+        working_dir: /home/node/app
+        volumes:
+          - ./:/home/node/app
+    web:
+        build:
+            context: .
+            dockerfile: Dockerfile-django

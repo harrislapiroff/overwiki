@@ -3,71 +3,64 @@ Overwiki
 
 One wiki to rule them all.
 
-Development Installation
-========================
+Development
+===========
 
-These instructions assume that you have [Python][], [pip][], and
-[virtualenvwrapper][] installed.
+### Installation
 
-[Python 3]: https://www.python.org/
-[pip]: https://pip.pypa.io/
-[virtualenvwrapper]: https://virtualenvwrapper.readthedocs.io/
+The quickest way to get up and running is to use our Docker configuration. First ensure that you have [Docker installed and running][docker].
 
-**Note:** If you are not sure where Python 3 is installed on your machine, try
-using `which python3` to locate it.
+Then, from a shell in the `overwiki` top level directory, run
 
 ```bash
-# Clone the repo
-git clone https://github.com/harrislapiroff/overwiki
-cd overwiki
-
-# Make a virtual environment
-mkvirtualenv overwiki -p /path/to/python3
-
-# Install the requirements
-pip install -r requirements.txt
-npm install
-
-# Create the database
-./manage.py migrate
+docker-compose up
 ```
 
-Configuration
-=============
+This will create and build the three containers necessary for this application:
 
-Overwiki requires some configuration variables be set. We recommend you create
-a `.env` file and set these variables on your own dev machine in that file,
-like so:
+1. `postgres`: PostgreSQL
+2. `webpack`: Node/Webpack
+3. `web`: Python/Django
+
+Once all three containers are running, you can access the application from your web browser at http://localhost:8000/
+
+[docker]: https://www.docker.com/community-edition
+
+### Running Commands
+
+Some common tasks require running commands from inside the docker containers. Provided are a couple examples of how to do this.
+
+Installing a new node dependency:
 
 ```bash
-workon overwiki
-SECRET_KEY="SECRET"  # This is required. Set to anything.
-DATABASE_URL="postgres://root:password@server/dbname"  # Default: sqlite:///db.sqlite3
+docker-compose exec webpack npm install react --save
 ```
 
-You can now use `source .env` to properly activate your environment or use
-a utility like [autoenv][].
-
-[autoenv]: https://github.com/kennethreitz/autoenv
-
-Development Server
-==================
-
-You will need multiple shells to run the server: one for Django and one for
-Webpack.
-
-Django:
+Creating a new database migration:
 
 ```bash
-# Run the server
-./manage.py runserver
+docker-compose exec web ./manage.py makemigrations overwiki
 ```
 
-Webpack:
+Dropping into a Django shell:
 
 ```bash
-npm run start
+docker-compose exec web ./manage.py shell
 ```
+
+### Advanced Development Environments
+
+It is possible not to use Docker or to use Docker only for _some_ of the application's required services, though documentation for this is not (yet) provided here.
+
+### Connecting to the Database
+
+The database is a PostgreSQL database that (presuming you are using the Docker setup) will be available with these connection details:
+
+* **Server:** `localhost`
+* **Port:** `15432`
+* **User:** `overwiki`
+* **Password:** `onewikitorulethem`
+* **Database:** `overwiki`
 
 Deployment
 ==========

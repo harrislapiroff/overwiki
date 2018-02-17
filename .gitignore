@@ -18,4 +18,4 @@ pip-delete-this-directory.txt
 .env
 
 # Application-specific
-/overwiki/local_settings.py
+/overwiki/settings/local_settings.py
