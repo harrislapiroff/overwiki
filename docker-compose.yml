@@ -2,6 +2,7 @@ version: '3'
 services:
     postgres:
         image: 'postgres:10.2-alpine'
+        restart: always
         environment:
             POSTGRES_USER: 'overwiki'
             POSTGRES_PASSWORD: 'onewikitorulethem'
@@ -9,6 +10,7 @@ services:
             - '15432:5432'
     webpack:
         image: 'node:9.5.0-alpine'
+        restart: always
         user: 'node'
         command: 'npm run start'
         working_dir: /home/node/app
@@ -18,3 +20,13 @@ services:
         build:
             context: .
             dockerfile: Dockerfile-django
+        restart: always
+        command: sh -c 'python manage.py migrate && python manage.py runserver 0.0.0.0:8000'
+        volumes:
+            - .:/django
+        ports:
+            - "8000:8000"
+        depends_on:
+            - postgres
+        environment:
+            DATABASE_URL: 'postgres://overwiki:onewikitorulethem@postgres:5432/overwiki'

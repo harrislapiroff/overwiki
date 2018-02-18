@@ -16,11 +16,13 @@ Then, from a shell in the `overwiki` top level directory, run
 docker-compose up
 ```
 
-This will create and build the three containers necessary for this application:
+This will create and build the three containers necessary for this application. This will take quite a while the first time you run it and may still take a minute or so on consecutive times.
 
 1. `postgres`: PostgreSQL
 2. `webpack`: Node/Webpack
 3. `web`: Python/Django
+
+**Note:** Every time the node container starts up it will install any missing dependencies. The python container *will not*. See **"Running Commands"** below for how to install missing dependencies.
 
 Once all three containers are running, you can access the application from your web browser at http://localhost:8000/
 
@@ -34,6 +36,12 @@ Installing a new node dependency:
 
 ```bash
 docker-compose exec webpack npm install react --save
+```
+
+Installing missing python dependencies from `requirements.txt`:
+
+```bash
+docker-compose exec web pip install -r requirements.txt
 ```
 
 Creating a new database migration:
