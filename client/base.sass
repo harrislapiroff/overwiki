@@ -24,3 +24,32 @@ h1, h2, h3
 
 .megadraft-editor .paragraph + .paragraph
 	margin-top: 15px
+
+// Basic Components (i.e., components that don't require a React component, yet)
+
+.button
+	border-radius: 4px
+	background: transparent
+	box-shadow: none
+	padding: 5px 10px
+	font: inherit
+	border: none
+	text-decoration: none
+
+.button--o-gray
+	border: 1px solid #CCC
+	color: #888
+	&:hover
+		border-color: #666
+		color: #666
+
+.button--blue
+	color: #FFF
+	background-color: #069
+	&:hover
+		background-color: #058
+
+
+.button--block
+	text-align: center
+	display: block

@@ -27,7 +27,7 @@ render((
 				</div>
 				<div className="sidebar-layout--main">
 					<Route exact path="/" component={WikiPage} />
-					<Route path="/:slug" component={WikiPage} />
+					<Route path="/:slug/:action(view|edit)?" component={WikiPage} />
 				</div>
 			</div>
 		</Router>

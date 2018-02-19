@@ -27,6 +27,7 @@ export default class WikiPageEditor extends PureComponent {
 			<MegadraftEditor
 				editorState={this.state.editorState}
 				onChange={this.onChange}
+				readOnly={this.props.readOnly}
 			/>
 		)
 	}
@@ -35,9 +36,11 @@ export default class WikiPageEditor extends PureComponent {
 WikiPageEditor.propTypes = {
 	content: PropTypes.object,
 	onChange: PropTypes.func,
+	readOnly: PropTypes.bool,
 }
 
 WikiPageEditor.defaultProps = {
 	content: {},
 	onChange: () => {},
+	readOnly: false,
 }

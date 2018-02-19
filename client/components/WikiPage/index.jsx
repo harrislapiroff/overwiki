@@ -1,6 +1,7 @@
 import axios from 'axios'
 import Cookie from 'js-cookie'
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Fragment } from 'react'
+import {Link} from 'react-router-dom'
 import throttle from 'lodash/throttle'
 
 import Loader from '~/components/Loader'
@@ -82,20 +83,48 @@ export default class WikiPage extends PureComponent {
 		if (this.state.loading) return <Loader />
 
 		const { page, saving } = this.state
+		const editing = this.props.match.params.action === 'edit'
 
 		return (
 			<div className="wiki-page">
-				<h1 className="wiki-page__title">{page.title}</h1>
+				<h1 className="wiki-page__title">
+					{page.title}
+				</h1>
 				<div className="wiki-page__body">
 					<WikiPageEditor
 						content={JSON.parse(page.content)}
-						onChange={this.handleEditorChange}
+						onChange={editing ? this.handleEditorChange : () => {}}
+						readOnly={!editing}
 					/>
 				</div>
-				<div className="wiki-page__status">
-					{!this.state.pristine && !this.state.saving && 'Unsaved.'}
-					{this.state.saving && 'Saving...'}
-					{this.state.pristine && 'Saved.'}
+				<div className="wiki-page__footer">
+					<div class="wiki-page__footer-status">
+						{editing ? (
+							<Fragment>
+								{!this.state.pristine && !this.state.saving && 'Unsaved.'}
+								{this.state.saving && 'Saving...'}
+								{this.state.pristine && 'Saved.'}
+							</Fragment>
+						) : (
+							<Fragment>
+								PAGE DETAILS GO HERE SOMEDAY SOON
+							</Fragment>
+						)}
+					</div>
+					<div className="wiki-page__footer-controls">
+						{editing ? (
+							<Link
+								to={`/${page.slug}`}
+								class="button button--blue"
+							>Done</Link>
+						) : (
+							<Link
+								to={`/${page.slug}/edit`}
+								class="button button--o-gray"
+							>Edit</Link>
+
+						)}
+					</div>
 				</div>
 			</div>
 		)

@@ -15,16 +15,24 @@ $w-padding: 100px
 .wiki-page__body
 	margin-bottom: 100px
 
-.wiki-page__status
+.wiki-page__footer
 	box-sizing: border-box
 	background-color: #F5F5F5
 	color: #888
 	font-size: .8em
-	position: fixed
+	position: sticky
 	bottom: 0
 	left: 50%
-	transform: translate(-50%, 0)
 	width: 100%
 	max-width: $w-max-width - 2 * $w-padding
-	padding: 10px 20px
+	padding: 15px 20px
 	margin: 0 auto
+	z-index: 1
+	display: flex
+	justify-content: space-between
+
+.wiki-page__footer-status, .wiki-page__footer-controls
+	text-align: left
+
+ .wiki-page__footer-controls
+	text-align: right
