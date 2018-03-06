@@ -38,6 +38,7 @@ h1, h2, h3
 
 .button--o-gray
 	border: 1px solid #CCC
+	padding: 3px 8px
 	color: #888
 	&:hover
 		border-color: #666
@@ -53,3 +54,24 @@ h1, h2, h3
 .button--block
 	text-align: center
 	display: block
+
+.flip-button-container
+	position: relative
+	padding: 5px 0
+	height: 1em
+
+.flip-button
+	position: absolute
+	top: 0
+	right: 0
+	backface-visibility: hidden
+	transition: 250ms transform ease-in-out
+
+.flip-button-enter
+	transform: rotateX(180deg)
+
+.flip-button-enter-active
+	transform: rotateX(0)
+
+.flip-button-exit-active
+	transform: rotateX(-180deg)

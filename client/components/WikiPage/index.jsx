@@ -1,6 +1,7 @@
 import axios from 'axios'
 import Cookie from 'js-cookie'
 import React, { PureComponent, Fragment } from 'react'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import {Link} from 'react-router-dom'
 import throttle from 'lodash/throttle'
 
@@ -84,6 +85,7 @@ export default class WikiPage extends PureComponent {
 
 		const { page, saving } = this.state
 		const editing = this.props.match.params.action === 'edit'
+		const location = this.props.location
 
 		return (
 			<div className="wiki-page">
@@ -98,7 +100,7 @@ export default class WikiPage extends PureComponent {
 					/>
 				</div>
 				<div className="wiki-page__footer">
-					<div class="wiki-page__footer-status">
+					<div className="wiki-page__footer-status">
 						{editing ? (
 							<Fragment>
 								{!this.state.pristine && !this.state.saving && 'Unsaved.'}
@@ -112,18 +114,26 @@ export default class WikiPage extends PureComponent {
 						)}
 					</div>
 					<div className="wiki-page__footer-controls">
-						{editing ? (
-							<Link
-								to={`/${page.slug}`}
-								class="button button--blue"
-							>Done</Link>
-						) : (
-							<Link
-								to={`/${page.slug}/edit`}
-								class="button button--o-gray"
-							>Edit</Link>
-
-						)}
+						<div className="flip-button-container">
+							<TransitionGroup>
+								{editing ? (
+									<CSSTransition classNames="flip-button" key={location.key} timeout={250}>
+										<Link
+											to={`/${page.slug}`}
+											className="flip-button button button--blue"
+											disabled={this.state.saving}
+										>Done</Link>
+									</CSSTransition>
+								) : (
+									<CSSTransition classNames="flip-button" key={location.key} timeout={250}>
+										<Link
+											to={`/${page.slug}/edit`}
+											className="flip-button button button--o-gray"
+										>Edit</Link>
+									</CSSTransition>
+								)}
+							</TransitionGroup>
+						</div>
 					</div>
 				</div>
 			</div>

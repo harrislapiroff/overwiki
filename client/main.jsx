@@ -19,7 +19,7 @@ window.apiRoot = appEl.dataset.apiWikiRoot
 
 
 render((
-	<div class="wiki-app">
+	<div className="wiki-app">
 		<Router>
 			<div className="sidebar-layout">
 				<div className="sidebar-layout--side">
