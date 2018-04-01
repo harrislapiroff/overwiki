@@ -1,12 +1,12 @@
 import axios from 'axios'
 import Cookie from 'js-cookie'
-import React, { PureComponent, Fragment } from 'react'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import {Link} from 'react-router-dom'
+import React, { PureComponent } from 'react'
 import throttle from 'lodash/throttle'
 
 import Loader from '~/components/Loader'
 import WikiPageEditor from '~/components/WikiPage/WikiPageEditor'
+import WikiPageFooter from '~/components/WikiPage/WikiPageFooter'
+import WikiPageTitle from '~/components/WikiPage/WikiPageTitle'
 
 import './WikiPage.sass'
 
@@ -24,9 +24,11 @@ export default class WikiPage extends PureComponent {
 
 		this.fetchData = this.fetchData.bind(this)
 		this.patchData = throttle(this.patchData, 1000).bind(this)
+		this.patchTitle = throttle(this.patchTitle, 1000).bind(this)
 		this.getSlug = this.getSlug.bind(this)
 		this.handleDataLoaded = this.handleDataLoaded.bind(this)
 		this.handleEditorChange = this.handleEditorChange.bind(this)
+		this.handleTitleChange = this.handleTitleChange.bind(this)
 	}
 
 	/** Fetch page data once the component mounts */
@@ -63,6 +65,20 @@ export default class WikiPage extends PureComponent {
 		)
 	}
 
+	/** Patch title to the API */
+	patchTitle(title) {
+		const csrfToken = Cookie.get('csrftoken')
+		const headers = csrfToken ? { 'X-CSRFToken': csrfToken } : {}
+		this.setState({ saving: true })
+		axios.patch(
+			`${window.apiRoot}pages/${this.getSlug()}/`,
+			{ title },
+			{ headers },
+		).then(
+			this.setState.bind(this, { saving: false, pristine: true }, null)
+		)
+	}
+
 	/** Return slug if one is set in the URL, otherwise 'home' */
 	getSlug() {
 		return this.props.match.params.slug || 'home'
@@ -80,18 +96,27 @@ export default class WikiPage extends PureComponent {
 		)
 	}
 
+	handleTitleChange(newTitle) {
+		this.setState(
+			{ pristine: false },
+			this.patchTitle(newTitle)
+		)
+	}
+
 	render() {
 		if (this.state.loading) return <Loader />
 
-		const { page, saving } = this.state
+		const { page, saving, pristine } = this.state
 		const editing = this.props.match.params.action === 'edit'
 		const location = this.props.location
 
 		return (
 			<div className="wiki-page">
-				<h1 className="wiki-page__title">
-					{page.title}
-				</h1>
+				<WikiPageTitle
+					title={page.title}
+					editing={editing}
+					onChange={this.handleTitleChange}
+				/>
 				<div className="wiki-page__body">
 					<WikiPageEditor
 						content={JSON.parse(page.content)}
@@ -99,43 +124,13 @@ export default class WikiPage extends PureComponent {
 						readOnly={!editing}
 					/>
 				</div>
-				<div className="wiki-page__footer">
-					<div className="wiki-page__footer-status">
-						{editing ? (
-							<Fragment>
-								{!this.state.pristine && !this.state.saving && 'Unsaved.'}
-								{this.state.saving && 'Saving...'}
-								{this.state.pristine && 'Saved.'}
-							</Fragment>
-						) : (
-							<Fragment>
-								PAGE DETAILS GO HERE SOMEDAY SOON
-							</Fragment>
-						)}
-					</div>
-					<div className="wiki-page__footer-controls">
-						<div className="flip-button-container">
-							<TransitionGroup>
-								{editing ? (
-									<CSSTransition classNames="flip-button" key={location.key} timeout={250}>
-										<Link
-											to={`/${page.slug}`}
-											className="flip-button button button--blue"
-											disabled={this.state.saving}
-										>Done</Link>
-									</CSSTransition>
-								) : (
-									<CSSTransition classNames="flip-button" key={location.key} timeout={250}>
-										<Link
-											to={`/${page.slug}/edit`}
-											className="flip-button button button--o-gray"
-										>Edit</Link>
-									</CSSTransition>
-								)}
-							</TransitionGroup>
-						</div>
-					</div>
-				</div>
+				<WikiPageFooter
+					editing={editing}
+					saving={saving}
+					pristine={pristine}
+					pageUrl={`/${page.slug}`}
+					editUrl={`/${page.slug}/edit`}
+				/>
 			</div>
 		)
 	}
