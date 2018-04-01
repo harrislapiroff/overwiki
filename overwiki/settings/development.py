@@ -9,4 +9,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-from .local_settings import *
+try:
+    from .local_settings import *  #
+except:
+    pass
